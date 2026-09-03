@@ -55,10 +55,14 @@ in the database rather than by application luck.
 Prerequisites: Docker, JDK 17, Node 20+.
 
 ```bash
-docker compose up -d                     # PostgreSQL, Keycloak (9090), MailDev (1080)
-cd booknetwork && ./mvnw spring-boot:run # API on http://localhost:8088/api/v1
-cd booknetwork-ui && npm ci && npm start # UI on http://localhost:4201
+docker compose up -d                     # PostgreSQL, Keycloak (9090), MailDev (1080) — in this repository
+./mvnw spring-boot:run                   # API on http://localhost:8088/api/v1 — this repository
+npm ci && npm start                      # UI on http://localhost:4201 — in the sibling ui repository (booknetwork-ui)
 ```
+
+This repository holds the API; the Angular client lives in its own repository
+(`booknetwork-ui`) with the Playwright end-to-end suite under its `e2e/`
+directory (`cd e2e && npm ci && npx playwright install chromium && npm test`).
 
 Keycloak imports the `booknetwork` realm on first start; Flyway creates the
 schema and seeds a small demo shelf. Two demo accounts ship with the realm —
@@ -87,13 +91,13 @@ theirs. Locally everything lands in MailDev.
 
 The backend publishes its OpenAPI description at `/api/v1/v3/api-docs`
 (Swagger UI at `/api/v1/swagger-ui.html`). The frozen copy
-`booknetwork-ui/openapi.json` is the source the typed Angular client is
+`openapi.json` in the ui repository is the source the typed Angular client is
 generated from — regenerate with `npx ng-openapi-gen` after API changes.
 
 ## Tests
 
 ```bash
-cd booknetwork-e2e && npm ci && npx playwright install chromium && npm test
+cd e2e && npm ci && npx playwright install chromium && npm test  # in the ui repository
 ```
 
 The Playwright suite drives the app through real Keycloak logins: the full
