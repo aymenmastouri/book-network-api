@@ -60,9 +60,10 @@ docker compose up -d                     # PostgreSQL, Keycloak (9090), MailDev 
 npm ci && npm start                      # UI on http://localhost:4201 — in the sibling ui repository (booknetwork-ui)
 ```
 
-This repository holds the API; the Angular client lives in its own repository
-(`booknetwork-ui`) with the Playwright end-to-end suite under its `e2e/`
-directory (`cd e2e && npm ci && npx playwright install chromium && npm test`).
+This repository holds the API and the shared infrastructure (`docker-compose.yml`,
+the Keycloak realm, the Flyway migrations that seed the demo data). The Angular
+client is the sibling repository `book-network-ui`; the Playwright end-to-end suite
+is the sibling repository `book-network-e2e`.
 
 Keycloak imports the `booknetwork` realm on first start; Flyway creates the
 schema and seeds a small demo shelf. Two demo accounts ship with the realm —
@@ -97,7 +98,7 @@ generated from — regenerate with `npx ng-openapi-gen` after API changes.
 ## Tests
 
 ```bash
-cd e2e && npm ci && npx playwright install chromium && npm test  # in the ui repository
+npm ci && npx playwright install chromium && npm test  # in the book-network-e2e repository
 ```
 
 The Playwright suite drives the app through real Keycloak logins: the full
