@@ -106,7 +106,10 @@ Unit tests run with Maven and JUnit 5; JaCoCo measures their coverage.
 
 The coverage report is JaCoCo XML at `target/site/jacoco/jacoco.xml`, written
 by the `test` phase. Unit tests live under `src/test/java`, next to the
-package of the class they test.
+package of the class they test. Repository tests (`@DataJpaTest`) run against
+the PostgreSQL that `docker compose up -d` starts on localhost:5432
+(`src/test/resources/config/application.yml` keeps Spring from swapping in an
+embedded database, which could not read the PostgreSQL schema).
 
 The end-to-end suite lives in its own repository:
 
