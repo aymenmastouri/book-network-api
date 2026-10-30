@@ -97,6 +97,19 @@ generated from — regenerate with `npx ng-openapi-gen` after API changes.
 
 ## Tests
 
+Unit tests run with Maven and JUnit 5; JaCoCo measures their coverage.
+
+```bash
+./mvnw -B test                       # every unit test, writes target/site/jacoco/jacoco.xml
+./mvnw -B test -Dtest=BookMapperTest # one test class, same coverage report
+```
+
+The coverage report is JaCoCo XML at `target/site/jacoco/jacoco.xml`, written
+by the `test` phase. Unit tests live under `src/test/java`, next to the
+package of the class they test.
+
+The end-to-end suite lives in its own repository:
+
 ```bash
 npm ci && npx playwright install chromium && npm test  # in the book-network-e2e repository
 ```
