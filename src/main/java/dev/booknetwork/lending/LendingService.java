@@ -57,7 +57,7 @@ public class LendingService {
         if (book.isOwnedBy(borrower.getId())) {
             throw new BusinessRuleException("own_book", "You cannot borrow your own book");
         }
-        if (!book.isShareable() || book.isArchived()) {
+        if (!book.isShareable()) {
             throw new BusinessRuleException("not_shareable", "This book is not available for borrowing");
         }
         if (loanRepository.findByBookIdAndApprovedAtIsNull(bookId).isPresent()) {
