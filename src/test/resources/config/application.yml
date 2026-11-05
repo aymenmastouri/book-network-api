@@ -1,0 +1,7 @@
+# Repository tests (@DataJpaTest) run against the project's own PostgreSQL —
+# the one docker-compose starts on localhost:5432 — instead of an embedded
+# database, which could not read the PostgreSQL schema the migrations write.
+spring:
+  test:
+    database:
+      replace: none
